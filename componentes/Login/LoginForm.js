@@ -3,34 +3,51 @@ import { Image, StyleSheet, Text, View, TextInput, StatusBar,TouchableOpacity} f
 //import styles from './../../css/estilo.js';
 
 export default class LoginForm extends Component{
- render(){
-  return (
-   <View style={styles.container}>
-     <StatusBar barStyle="light-content" />
-        <TextInput
-            style={styles.input}
-            placeholder="usuario"
-            placeholderTextColor= "#666666"
-            returnKeyType="next"
-            keyboardType="email-address"
-            autoCapitalize="none"
-            autoCorrect={false}
-            onSubmitEditing={(input) => this.passwordInput.focus()}
-        />
-        <TextInput
-            secureTextEntry
-            style={styles.input}
-            placeholder="password"
-            placeholderTextColor= "#666666"
-            returnKeyType="go"
-            ref={(input) => this.passwordInput = input}
-        />
-        <TouchableOpacity style={styles.botonContenedor} >
-         <Text style={styles.botonTexto}>LOGIN</Text>
-        </TouchableOpacity>
-   </View>
-  );
- }
+
+        constructor(props){
+            super(props)
+            this.state={
+                userEmail:'',
+                userPassword:''
+            }
+        }
+
+        login = () => {
+             const{userEmail, userPassword} = this.state;
+             Keyboard.dismiss();
+        }
+
+
+     render(){
+      return (
+       <View style={styles.container}>
+         <StatusBar barStyle="light-content" />
+            <TextInput
+                style={styles.input}
+                placeholder="usuario"
+                placeholderTextColor= "#666666"
+                returnKeyType="next"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+                onChangeText={userEmail => this.setState({userEmail})}
+                onSubmitEditing={(input) => this.passwordInput.focus()}
+            />
+            <TextInput
+                secureTextEntry
+                style={styles.input}
+                placeholder="password"
+                placeholderTextColor= "#666666"
+                returnKeyType="go"
+                onChangeText={userPassword => this.setState({userPassword})}
+                ref={(input) => this.passwordInput = input}
+            />
+            <TouchableOpacity style={styles.botonContenedor} >
+             <Text style={styles.botonTexto}>LOGIN</Text>
+            </TouchableOpacity>
+       </View>
+      );
+     }
 }
 
 const styles = StyleSheet.create({
