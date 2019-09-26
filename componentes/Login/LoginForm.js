@@ -14,9 +14,28 @@ export default class LoginForm extends Component{
 
         login = () => {
              const{userEmail, userPassword} = this.state;
+             //recibimos/enviamos datos con fetch
+             fetch('http://www.webentorn.com/gtareas/puente_crud/validalogin.puente.php',{
+                method: 'post',
+                header:{
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+                },
+                body: JSON.stringify({
+                 //pasamos los inputs al servidor
+                 usuarioemp: userEmail,
+                 passemp: userPassword
+                })
+             })
+             .then ((response) => response.json())
+             .then((responseJson)=>{
+              alert(responseJson);
+             })
+.catch ((error) =>{
+console.error(error);
+});
              Keyboard.dismiss();
         }
-
 
      render(){
       return (
