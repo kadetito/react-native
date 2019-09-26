@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Image, StyleSheet, Text, View, TextInput, StatusBar,TouchableOpacity} from 'react-native';
+import { Image, StyleSheet, Text, View, TextInput, StatusBar,TouchableOpacity,Keyboard } from 'react-native';
 //import styles from './../../css/estilo.js';
 
 export default class LoginForm extends Component{
@@ -7,15 +7,15 @@ export default class LoginForm extends Component{
         constructor(props){
             super(props)
             this.state={
-                userEmail:'',
-                userPassword:''
+                userEmail: '',
+                userPassword: ''
             }
         }
 
         login = () => {
              const{userEmail, userPassword} = this.state;
-             //recibimos/enviamos datos con fetch
-             fetch('http://www.webentorn.com/gtareas/puente_crud/validalogin.puente.php',{
+//             //recibimos/enviamos datos con fetch
+             fetch('http://www.webentorn.com/gtareas/puente_crud/login.php',{
                 method: 'post',
                 header:{
                 'Accept': 'application/json',
@@ -23,17 +23,24 @@ export default class LoginForm extends Component{
                 },
                 body: JSON.stringify({
                  //pasamos los inputs al servidor
-                 usuarioemp: userEmail,
-                 passemp: userPassword
+                 email: userEmail,
+                 password: userPassword
                 })
+             }).then ((response) => response.json())
+                    .then((responseJson)=>{
+                        alert(responseJson);
+                  if(responseJson == "ok"){
+                    alert("Success");
+                    this.props.navigation.navigate("Profile");
+                  } else {
+                    alert("Datos incorrectos");
+                  }
              })
-             .then ((response) => response.json())
-             .then((responseJson)=>{
-              alert(responseJson);
-             })
-.catch ((error) =>{
-console.error(error);
-});
+            .catch (
+                (error) =>{
+                  console.error(error);
+                 }
+            );
              Keyboard.dismiss();
         }
 
@@ -61,9 +68,21 @@ console.error(error);
                 onChangeText={userPassword => this.setState({userPassword})}
                 ref={(input) => this.passwordInput = input}
             />
-            <TouchableOpacity style={styles.botonContenedor} >
+            <TouchableOpacity onPress={this.login} style={styles.botonContenedor} >
              <Text style={styles.botonTexto}>LOGIN</Text>
             </TouchableOpacity>
+
+
+
+
+        <View >
+            <Text style={styles.centrado}>crear cuenta            recordar datos</Text>
+        </View>
+
+
+
+
+
        </View>
       );
      }
@@ -71,7 +90,21 @@ console.error(error);
 
 const styles = StyleSheet.create({
     container: {
-        padding:15
+        padding:15,
+        },
+     izquierda:{
+         height: 50,
+         textAlign: 'left',
+         marginTop:20
+         },
+     centrado:{
+         textAlign: 'center',justifyContent: 'center',alignItems: 'center',
+         marginTop:20
+          },
+    derecha:{
+        height: 50,
+        textAlign: 'right',
+        marginTop:20
         },
     input: {
         height:40,
@@ -88,5 +121,4 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color:'#ffffff'
     }
-
 });
