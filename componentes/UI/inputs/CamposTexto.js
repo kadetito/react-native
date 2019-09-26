@@ -1,30 +1,40 @@
-import React, { Component } from 'react';
-import { StyleSheet, Text, View, TextInput } from 'react-native';
+import React, { Component } from 'react'
+import { View, Text, Image, StyleSheet} from 'react-native'
+import styles from './../../../css/estilo.js';
 
-const contenido = {
-  name: 'nombreinput',
-  text: 'cosa que va dentro del input como value',
-  classeinput: 'form-control',
+
+const camposdeexto = {
+input: 'inputstyle',
+  name1: 'username',
+  name2: 'password'
+
 }
 
-
-
-class Inputs extends Component {
+export default class CamposTexto extends Component {
   render() {
- <View style={styles.container}>
- <View style={styles.info}>
-      <TextInput name="{contenido.name}" class="{contenido.classeinput}" id="" value="{contenido.text}" />
+    return (
+<View>
+    <View style={[styles.box, styles.box2]}>
+    <TextInput style={styles.inputstyle}  />
+
+//    <Input name={camposdeexto.name1} value={camposdeexto.name1}
+//      placeholder='INPUT WITH CUSTOM ICON'
+//      leftIcon={
+//        <Icon
+//          name='user'
+//          size={24}
+//          color='black'
+//        />
+//      }
+//    />
+
+
     </View>
-     </View>
+    <View style={[styles.box, styles.box2]}><TextInput style={styles.inputstyle} name={camposdeexto.name2} value={camposdeexto.name2} /></View>
+</View>
+
+
+
+    )
   }
 }
-
-
-const styles = new StyleSheet.create({
-  container: {},
-  info: {},
-  classeinput: {}
-})
-
-
-export default Inputs;
